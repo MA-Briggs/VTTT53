@@ -82,10 +82,12 @@ void UAgoraWidget::NativeConstruct()
     SetupUI();
     // Setup Agora SDK engine
     SetupSDKEngine();
+
+    //Join();
 }
 void UAgoraWidget::NativeDestruct()
 {
-    Leave();
+    //Leave();
     Super::NativeDestruct();
     // Clean up resources
     if (RtcEngineProxy != nullptr)
@@ -145,12 +147,12 @@ void UAgoraWidget::onJoinChannelSuccess(const char* channel, agora::rtc::uid_t u
 
 void UAgoraWidget::onLeaveChannel(const agora::rtc::RtcStats& stats)
 {
-    AsyncTask(ENamedThreads::GameThread, [=, this]()
+   /* AsyncTask(ENamedThreads::GameThread, [=, this]()
         {
             agora::rtc::VideoCanvas videoCanvas;
             videoCanvas.view = nullptr;
             videoCanvas.uid = 0;
             videoCanvas.sourceType = agora::rtc::VIDEO_SOURCE_TYPE::VIDEO_SOURCE_CAMERA;
             RtcEngineProxy->setupLocalVideo(videoCanvas);
-        });
+        });*/
 }

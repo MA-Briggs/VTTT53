@@ -34,7 +34,7 @@
 /NODEFAULTLIB:"LIBCD"
 /NODEFAULTLIB:"LIBCPD"
 /FUNCTIONPADMIN:6
-"C:\Users\Marilyn\Documents\Unreal Projects\VTT53\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RiderDebuggerSupport\Module.RiderDebuggerSupport.cpp.obj"
+"C:\Users\Marilyn\Documents\GitHub\VTTT53\VTT53\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RiderDebuggerSupport\Module.RiderDebuggerSupport.cpp.obj"
 "..\Intermediate\Build\Win64\x64\UnrealEditor\Development\Default.rc2.res"
 "..\Intermediate\Build\Win64\x64\UnrealEditor\Development\Core\UnrealEditor-Core.lib"
 "..\Intermediate\Build\Win64\x64\UnrealEditor\Development\CoreUObject\UnrealEditor-CoreUObject.lib"
@@ -64,7 +64,7 @@
 "synchronization.lib"
 "dwmapi.lib"
 "imm32.lib"
-/OUT:"C:\Users\Marilyn\Documents\Unreal Projects\VTT53\Plugins\Developer\RiderLink\Binaries\Win64\UnrealEditor-RiderDebuggerSupport.dll"
-/IMPLIB:"C:\Users\Marilyn\Documents\Unreal Projects\VTT53\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RiderDebuggerSupport\UnrealEditor-RiderDebuggerSupport.sup.lib"
-/PDB:"C:\Users\Marilyn\Documents\Unreal Projects\VTT53\Plugins\Developer\RiderLink\Binaries\Win64\UnrealEditor-RiderDebuggerSupport.pdb"
+/OUT:"C:\Users\Marilyn\Documents\GitHub\VTTT53\VTT53\Plugins\Developer\RiderLink\Binaries\Win64\UnrealEditor-RiderDebuggerSupport.dll"
+/IMPLIB:"C:\Users\Marilyn\Documents\GitHub\VTTT53\VTT53\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RiderDebuggerSupport\UnrealEditor-RiderDebuggerSupport.sup.lib"
+/PDB:"C:\Users\Marilyn\Documents\GitHub\VTTT53\VTT53\Plugins\Developer\RiderLink\Binaries\Win64\UnrealEditor-RiderDebuggerSupport.pdb"
 /ignore:4078
