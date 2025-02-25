@@ -35,7 +35,7 @@
 /NODEFAULTLIB:"LIBCPD"
 /FUNCTIONPADMIN:6
 /NATVIS:"..\Intermediate\Build\Win64\x64\UnrealEditor\Development\RenderCore\RenderCore.natvis"
-"C:\Users\Marilyn\Documents\Unreal Projects\VTT53\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RiderShaderInfo\Module.RiderShaderInfo.cpp.obj"
+"C:\Users\Marilyn\Documents\GitHub\VTTT53\VTT53\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RiderShaderInfo\Module.RiderShaderInfo.cpp.obj"
 "..\Intermediate\Build\Win64\x64\UnrealEditor\Development\Default.rc2.res"
 "..\Intermediate\Build\Win64\x64\UnrealEditor\Development\Core\UnrealEditor-Core.lib"
 "..\Intermediate\Build\Win64\x64\UnrealEditor\Development\Projects\UnrealEditor-Projects.lib"
@@ -65,7 +65,7 @@
 "synchronization.lib"
 "dwmapi.lib"
 "imm32.lib"
-/OUT:"C:\Users\Marilyn\Documents\Unreal Projects\VTT53\Plugins\Developer\RiderLink\Binaries\Win64\UnrealEditor-RiderShaderInfo.dll"
-/IMPLIB:"C:\Users\Marilyn\Documents\Unreal Projects\VTT53\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RiderShaderInfo\UnrealEditor-RiderShaderInfo.sup.lib"
-/PDB:"C:\Users\Marilyn\Documents\Unreal Projects\VTT53\Plugins\Developer\RiderLink\Binaries\Win64\UnrealEditor-RiderShaderInfo.pdb"
+/OUT:"C:\Users\Marilyn\Documents\GitHub\VTTT53\VTT53\Plugins\Developer\RiderLink\Binaries\Win64\UnrealEditor-RiderShaderInfo.dll"
+/IMPLIB:"C:\Users\Marilyn\Documents\GitHub\VTTT53\VTT53\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RiderShaderInfo\UnrealEditor-RiderShaderInfo.sup.lib"
+/PDB:"C:\Users\Marilyn\Documents\GitHub\VTTT53\VTT53\Plugins\Developer\RiderLink\Binaries\Win64\UnrealEditor-RiderShaderInfo.pdb"
 /ignore:4078

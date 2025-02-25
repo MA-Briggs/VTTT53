@@ -1,8 +1,8 @@
-"C:\Users\Marilyn\Documents\Unreal Projects\VTT53\Plugins\Developer\RiderLink\Source\RD\src\rd_framework_cpp\src\main\base\ISerializersOwner.cpp"
-/FI"C:\Users\Marilyn\Documents\Unreal Projects\VTT53\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RD\Definitions.h"
-/Fo"C:\Users\Marilyn\Documents\Unreal Projects\VTT53\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RD\ISerializersOwner.cpp.obj"
-/sourceDependencies "C:\Users\Marilyn\Documents\Unreal Projects\VTT53\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RD\ISerializersOwner.cpp.dep.json"
-@"C:\Users\Marilyn\Documents\Unreal Projects\VTT53\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RD\RD.Shared.rsp"
+"C:\Users\Marilyn\Documents\GitHub\VTTT53\VTT53\Plugins\Developer\RiderLink\Source\RD\src\rd_framework_cpp\src\main\base\ISerializersOwner.cpp"
+/FI"C:\Users\Marilyn\Documents\GitHub\VTTT53\VTT53\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RD\Definitions.h"
+/Fo"C:\Users\Marilyn\Documents\GitHub\VTTT53\VTT53\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RD\ISerializersOwner.cpp.obj"
+/sourceDependencies "C:\Users\Marilyn\Documents\GitHub\VTTT53\VTT53\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RD\ISerializersOwner.cpp.dep.json"
+@"C:\Users\Marilyn\Documents\GitHub\VTTT53\VTT53\Plugins\Developer\RiderLink\Intermediate\Build\Win64\x64\UnrealEditor\Development\RD\RD.Shared.rsp"
 /Zc:inline
 /nologo
 /Oi
