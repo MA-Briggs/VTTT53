@@ -1,0 +1,64 @@
+,Ints,Bool,Text
+STR,8,NULL,
+DEX,15,NULL,
+CON,12,NULL,
+INT,11,NULL,
+WIS,12,NULL,
+CHA,17,NULL,
+Acrobatics,NULL,0,
+Animal Handling,NULL,0,
+Arcana,NULL,0,	
+Athletics,NULL,0,
+Deception,NULL,1,
+History,NULL,0,
+Insight,NULL,1,
+Intimidation,NULL,0,
+Investigation,NULL,0,
+Medicine,NULL,0,
+Nature,NULL,0,
+Perception,NULL,0,
+Performance,NULL,0,
+Persuasion,NULL,1,
+Religion,NULL,0,
+Sleight of Hand,NULL,0,
+Stealth,NULL,1,
+Survival,NULL,0,
+Str Sav,NULL,0,
+Dex Sav,NULL,0,
+Con Sav,NULL,1,
+Int Sav,NULL,0,
+Wis Sav,NULL,0,
+Cha Sav,NULL,1,
+Prof Mod,NULL,2,	
+Proficiencies,NULL,NULL,"Daggers;
+darts;
+slings;
+quarterstaff;
+light crossbows;
+Disguise Kit;
+Thieves' Tools"
+Languages,NULL,NULL,Draconic		
+Traits,NULL,NULL,"WILD MAGIC SURGE: Immediately after you cast a sorcerer spell of 1st level or higher, the DM can have you roll a d20. If you roll a 1, roll on the Wild Magic Surge table to create a random magical effect.;
+TIDES OF CHAOS: You can manipulate the forces of chance and chaos to gain advantage on one attack roll, ability check, or saving throw. Once you do so, you must finish a long rest before you can use this feature again. Any time before you regain the use of this feature, the DM can have you roll on the Wild Magic Surge table immediately after you cast a sorcerer spell of 1st level or higher. You then regain the use of this feature.;
+FLEXIBLE CASTING: You can use your sorcery points to gain additional spell slots. or sacrifice spell slots to gain additional sorcery points. ;
+PACK TACTICS: You have advantage on an attack roll against a creature if at least one of your allies is within 5 feet of the creature and the ally isn't incapacitated.;
+GROVEL, COWER AND BEG (1/short rest): As an action on your turn, you can cower pathetically to distract nearby foes. Until the end of your next turn, your allies gain advantage on attack rolls against enemies within 10 feet of you that you can see.;
+SUNLIGHT SENSITIVITY: You have disadvantage on attack rolls and on Wisdom (Perception) checks that rely on sight when you, the target of your attack, or whatever you are trying to perceive is in direct sunlight.;
+DARKVISION (60 ft.);
+---METAMAGIC (4 sorcery points)---;
+SUBTLE SPELL: When you cast a spell, you can spend 1 sorcery point to cast it without any somatic or verbal components.;
+TWINNED SPELL: When you cast a spell that targets only one creature and doesn't have a range of self, you can spend a number of sorcery points equal to the spell's level to target a second creature in range with the same spell (1 sorcery point if the spell is a cantrip).;"
+HitDie,NULL,NULL,4d6
+MaxHealth,26,NULL,
+StartingInventory,NULL,NULL,"disguise kit
+thieves' tools
+bedroll
+rope (50 ft.)
+torch
+tinderbox
+waterskin"
+CP,0,NULL,	
+SP,0,NULL,
+GP,0,NULL,
+Darkvision,60,NULL,
+Speed,30,NULL,
