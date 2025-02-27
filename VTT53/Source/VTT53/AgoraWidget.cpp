@@ -79,9 +79,7 @@ void UAgoraWidget::NativeConstruct()
     CheckAndroidPermission();
 #endif
     // Setup UI elements
-    SetupUI();
-    // Setup Agora SDK engine
-    SetupSDKEngine();
+  
 
     //Join();
 }

@@ -17,7 +17,7 @@ class VTT53_API UVideoCallWidget : public UUserWidget
 protected:
 	// Initialize the custom Widget
 	virtual void NativeConstruct() override;
-
+public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	TObjectPtr<UImage> IconImage;
 };

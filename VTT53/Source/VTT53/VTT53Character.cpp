@@ -40,23 +40,36 @@ AVTT53Character::AVTT53Character()
 	//Mesh1P->SetRelativeRotation(FRotator(0.9f, -19.19f, 5.2f));
 	Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
 
-	WidgetSelf = CreateDefaultSubobject<UWidgetComponent>(TEXT("Widget"));
-	WidgetSelf->SetWidgetClass(UVideoCallWidget::StaticClass());
-	WidgetInstance = CreateWidget<UVideoCallWidget>(Cast<AVTT53PlayerController>(this->GetController()), UVideoCallWidget::StaticClass());
-	WidgetSelf->SetWidget(WidgetInstance);
-	WidgetSelf->SetWidgetSpace(EWidgetSpace::Screen);
+	static ConstructorHelpers::FClassFinder<UVideoCallWidget> MyWidgetFinder(TEXT("/Game/FirstPerson/Maps/BP_VideoCall"));
+	if (MyWidgetFinder.Succeeded())
+	{
+		pWidgetClass = MyWidgetFinder.Class;
+	}
 
-	WidgetInstance->SetVisibility(ESlateVisibility::Visible);
+	static ConstructorHelpers::FClassFinder<URemoteScreenWidget> MyWidgetFinder2(TEXT("/Game/FirstPerson/Maps/TestWidget"));
+	if (MyWidgetFinder2.Succeeded())
+	{
+		pWidgetClass2 = MyWidgetFinder2.Class;
+	}
+
+	WidgetSelf = CreateDefaultSubobject<UWidgetComponent>(TEXT("Widget"));
+	//WidgetSelf->SetWidgetClass(pWidgetClass);
+	WidgetSelf->SetWidgetSpace(EWidgetSpace::Screen);
 	const FQuat quat1 = FQuat(FVector(0.f, 0.f, 1.f), FMath::DegreesToRadians(180.f));
-	WidgetSelf->SetRelativeLocationAndRotation(FVector(50.f, 0.f, 25.f), quat1);
+	WidgetSelf->SetRelativeLocationAndRotation(FVector(50.f, 0.f, 10.f), quat1);
 	WidgetSelf->SetupAttachment(FirstPersonCameraComponent);
 	WidgetSelf->SetVisibility(true);
-	WidgetSelf->SetTwoSided(true);
+	WidgetSelf->SetDrawAtDesiredSize(true);
+	//WidgetSelf->Set
 	WidgetSelf->bOnlyOwnerSee = true;
 
+	//UVideoCallWidget* test = CreateWidget<UVideoCallWidget>(GetWorld(), pWidgetClass);
+	//WidgetSelf->SetWidget(test);
 
-	//WidgetSelf->SetWidgetClass(UVideoCallWidget)
+	//LocalCanvas = Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->IconImage;
 
+	// Setup Agora SDK engine
+	SetupSDKEngine();
 }
 
 //AVTT53Character::AVTT53Character()
@@ -77,6 +90,17 @@ void AVTT53Character::BeginPlay()
 		}
 	}
 
+	//SetWidgetLocal();
+
+	//Join();
+
+}
+
+void AVTT53Character::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Leave();
+
+	Super::EndPlay(EndPlayReason);
 }
 
 //////////////////////////////////////////////////////////////////////////// Input
@@ -104,7 +128,8 @@ void AVTT53Character::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 void AVTT53Character::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
-	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps); 
+
 	DOREPLIFETIME(AVTT53Character, CPP_Screens);
 }
 
@@ -141,7 +166,9 @@ void AVTT53Character::SpawnScreen(int IN_WID)
 	UWidgetComponent* NewScreen = NewObject<UWidgetComponent>(this); //CreateDefaultSubobject<UWidgetComponent>(TEXT("Widget"));
 	NewScreen->SetWidgetSpace(EWidgetSpace::World);
 	NewScreen->SetDrawAtDesiredSize(true);
-	URemoteScreenWidget* NewWidget = CreateWidget<URemoteScreenWidget>(GetWorld(), URemoteScreenWidget::StaticClass());
+
+
+	URemoteScreenWidget* NewWidget = CreateWidget<URemoteScreenWidget>(GetWorld(), pWidgetClass2);
 	NewWidget->SetVisibility(ESlateVisibility::Visible);
 	NewWidget->WID = IN_WID;
 	NewScreen->SetWidget(NewWidget);
@@ -158,4 +185,115 @@ void AVTT53Character::SetHasRifle(bool bNewHasRifle)
 bool AVTT53Character::GetHasRifle()
 {
 	return bHasRifle;
+}
+
+void AVTT53Character::SetWidgetLocal_Implementation()
+{
+
+	UVideoCallWidget* test = CreateWidget<UVideoCallWidget>(GetWorld(), pWidgetClass);
+	WidgetSelf->SetWidget(test);
+}
+
+void AVTT53Character::Join()
+{
+	agora::rtc::ChannelMediaOptions options;
+	RtcEngineProxy->enableVideo();
+
+	// Automatically subscribe to all audio streams
+	options.autoSubscribeAudio = true;
+
+	options.autoSubscribeVideo = true;
+
+	// Publish the audio collected by the microphone
+	options.publishMicrophoneTrack = true;
+
+	options.publishCameraTrack = true;
+
+	// Set channel profile to live broadcasting
+	options.channelProfile = agora::CHANNEL_PROFILE_TYPE::CHANNEL_PROFILE_COMMUNICATION;
+	// Set user role to broadcaster
+	options.clientRoleType = agora::rtc::CLIENT_ROLE_TYPE::CLIENT_ROLE_BROADCASTER;
+	// Join the channel
+	RtcEngineProxy->joinChannel(TCHAR_TO_ANSI(_token), TCHAR_TO_ANSI(_channelName), 0, options);
+}
+
+void AVTT53Character::Leave()
+{
+	RtcEngineProxy->leaveChannel();
+}
+
+void AVTT53Character::onLeaveChannel(const agora::rtc::RtcStats& stats)
+{
+	AsyncTask(ENamedThreads::GameThread, [=, this]()
+		{
+			agora::rtc::VideoCanvas videoCanvas;
+			videoCanvas.view = nullptr;
+			videoCanvas.uid = 0;
+			videoCanvas.sourceType = agora::rtc::VIDEO_SOURCE_TYPE::VIDEO_SOURCE_CAMERA;
+			RtcEngineProxy->setupLocalVideo(videoCanvas);
+		});
+}
+
+void AVTT53Character::onUserJoined(agora::rtc::uid_t uid, int elapsed)
+{
+}
+
+void AVTT53Character::onUserOffline(agora::rtc::uid_t uid, agora::rtc::USER_OFFLINE_REASON_TYPE reason)
+{
+}
+
+void AVTT53Character::onJoinChannelSuccess(const char* channel, agora::rtc::uid_t uid, int elapsed)
+{
+	AsyncTask(ENamedThreads::GameThread, [&]()
+		{
+			UE_LOG(LogTemp, Warning, TEXT("JoinChannelSuccess uid: %u"), uid);
+
+			agora::rtc::VideoCanvas videoCanvas;
+			//if(WidgetSelf->GetWidget()){
+				videoCanvas.view = LocalCanvas;
+				videoCanvas.uid = 0;
+				videoCanvas.sourceType = agora::rtc::VIDEO_SOURCE_TYPE::VIDEO_SOURCE_CAMERA;
+				RtcEngineProxy->setupLocalVideo(videoCanvas);
+			//}
+			
+		});
+
+	UID = uid;
+}
+
+void AVTT53Character::CheckAndroidPermission()
+{
+#if PLATFORM_ANDROID
+	// Get the platform name
+	FString pathfromName = UGameplayStatics::GetPlatformName();
+	// Check if the platform is Android
+	if (pathfromName == "Android")
+	{
+		// Array to store Android permissions
+		TArray AndroidPermission;
+		// Add required permissions
+		AndroidPermission.Add(FString("android.permission.RECORD_AUDIO"));
+		AndroidPermission.Add(FString("android.permission.READ_PHONE_STATE"));
+		AndroidPermission.Add(FString("android.permission.WRITE_EXTERNAL_STORAGE"));
+		// Request permissions
+		UAndroidPermissionFunctionLibrary::AcquirePermissions(AndroidPermission);
+	}
+#endif
+}
+
+void AVTT53Character::SetupSDKEngine()
+{
+	// Create RtcEngineContext
+	agora::rtc::RtcEngineContext RtcEngineContext;
+	// Set App ID
+	RtcEngineContext.appId = TCHAR_TO_ANSI(*_appID);
+	// Set event handler
+	RtcEngineContext.eventHandler = this;
+	// Create and initialize RtcEngineProxy
+	RtcEngineProxy = agora::rtc::ue::AgoraUERtcEngine::Get();
+	RtcEngineProxy->initialize(RtcEngineContext);
+}
+
+void AVTT53Character::SetupUI()
+{
 }
