@@ -10,17 +10,18 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "Engine/LocalPlayer.h"
+#include <Net/UnrealNetwork.h>
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
 //////////////////////////////////////////////////////////////////////////
 // AVTT53Character
-
+//const class FPostConstructInitializeProperties& PCIP) : Super(PCIP)
 AVTT53Character::AVTT53Character()
 {
 	// Character doesnt have a rifle at start
 	bHasRifle = false;
-	
+	//bReplicates = true;
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
 		
@@ -39,7 +40,28 @@ AVTT53Character::AVTT53Character()
 	//Mesh1P->SetRelativeRotation(FRotator(0.9f, -19.19f, 5.2f));
 	Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
 
+	WidgetSelf = CreateDefaultSubobject<UWidgetComponent>(TEXT("Widget"));
+	WidgetSelf->SetWidgetClass(UVideoCallWidget::StaticClass());
+	WidgetInstance = CreateWidget<UVideoCallWidget>(Cast<AVTT53PlayerController>(this->GetController()), UVideoCallWidget::StaticClass());
+	WidgetSelf->SetWidget(WidgetInstance);
+	WidgetSelf->SetWidgetSpace(EWidgetSpace::Screen);
+
+	WidgetInstance->SetVisibility(ESlateVisibility::Visible);
+	const FQuat quat1 = FQuat(FVector(0.f, 0.f, 1.f), FMath::DegreesToRadians(180.f));
+	WidgetSelf->SetRelativeLocationAndRotation(FVector(50.f, 0.f, 25.f), quat1);
+	WidgetSelf->SetupAttachment(FirstPersonCameraComponent);
+	WidgetSelf->SetVisibility(true);
+	WidgetSelf->SetTwoSided(true);
+	WidgetSelf->bOnlyOwnerSee = true;
+
+
+	//WidgetSelf->SetWidgetClass(UVideoCallWidget)
+
 }
+
+//AVTT53Character::AVTT53Character()
+//{
+//}
 
 void AVTT53Character::BeginPlay()
 {
@@ -80,6 +102,13 @@ void AVTT53Character::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 	}
 }
 
+void AVTT53Character::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(AVTT53Character, CPP_Screens);
+}
+
+
 
 void AVTT53Character::Move(const FInputActionValue& Value)
 {
@@ -105,6 +134,20 @@ void AVTT53Character::Look(const FInputActionValue& Value)
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+}
+
+void AVTT53Character::SpawnScreen(int IN_WID)
+{
+	UWidgetComponent* NewScreen = NewObject<UWidgetComponent>(this); //CreateDefaultSubobject<UWidgetComponent>(TEXT("Widget"));
+	NewScreen->SetWidgetSpace(EWidgetSpace::World);
+	NewScreen->SetDrawAtDesiredSize(true);
+	URemoteScreenWidget* NewWidget = CreateWidget<URemoteScreenWidget>(GetWorld(), URemoteScreenWidget::StaticClass());
+	NewWidget->SetVisibility(ESlateVisibility::Visible);
+	NewWidget->WID = IN_WID;
+	NewScreen->SetWidget(NewWidget);
+	NewScreen->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
+	NewScreen->RegisterComponent();
+	CPP_Screens.Add(NewScreen);
 }
 
 void AVTT53Character::SetHasRifle(bool bNewHasRifle)

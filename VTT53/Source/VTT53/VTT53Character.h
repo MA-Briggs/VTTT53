@@ -3,9 +3,23 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Blueprint/UserWidget.h"
+#if PLATFORM_ANDROID
+#include "AndroidPermission/Classes/AndroidPermissionFunctionLibrary.h"
+#endif
+#include "AgoraPluginInterface.h"
+#include "Components/Image.h"
+#include "Components/Button.h"
+#include "AgoraWidget.generated.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
+#include <Components/WidgetComponent.h>
+#include "VideoCallWidget.h"
+#include "RemoteScreenWidget.h"
+#include "VTT53PlayerController.h"
+
 #include "VTT53Character.generated.h"
+
 
 class UInputComponent;
 class USkeletalMeshComponent;
@@ -25,6 +39,12 @@ class AVTT53Character : public ACharacter
 	UPROPERTY(VisibleDefaultsOnly, Category=Mesh)
 	USkeletalMeshComponent* Mesh1P;
 
+	UPROPERTY(VisibleDefaultsOnly)
+	UWidgetComponent* WidgetSelf;	
+	
+	UPROPERTY(VisibleDefaultsOnly)
+	UVideoCallWidget* WidgetInstance;
+
 	/** First person camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FirstPersonCameraComponent;
@@ -42,6 +62,7 @@ class AVTT53Character : public ACharacter
 	UInputAction* MoveAction;
 	
 public:
+	//AVTT53Character(const class FPostConstructInitializeProperties& PCIP);
 	AVTT53Character();
 
 protected:
@@ -56,6 +77,12 @@ public:
 	/** Bool for AnimBP to switch to another animation set */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)
 	bool bHasRifle;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Replicated)
+	TArray<UWidgetComponent*> CPP_Screens;
+
+	UFUNCTION(BlueprintCallable)
+	void SpawnScreen(int IN_WID);
 
 	/** Setter to set the bool */
 	UFUNCTION(BlueprintCallable, Category = Weapon)
@@ -82,6 +109,8 @@ public:
 	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
 	/** Returns FirstPersonCameraComponent subobject **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
+
+	virtual void GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const override;
 
 };
 
