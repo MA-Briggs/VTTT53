@@ -56,20 +56,22 @@ AVTT53Character::AVTT53Character()
 	//WidgetSelf->SetWidgetClass(pWidgetClass);
 	WidgetSelf->SetWidgetSpace(EWidgetSpace::Screen);
 	const FQuat quat1 = FQuat(FVector(0.f, 0.f, 1.f), FMath::DegreesToRadians(180.f));
-	WidgetSelf->SetRelativeLocationAndRotation(FVector(50.f, 0.f, 10.f), quat1);
+	WidgetSelf->SetRelativeLocationAndRotation(FVector(50.f, 0.f, 25.f), quat1);
 	WidgetSelf->SetupAttachment(FirstPersonCameraComponent);
 	WidgetSelf->SetVisibility(true);
 	WidgetSelf->SetDrawAtDesiredSize(true);
 	//WidgetSelf->Set
 	WidgetSelf->bOnlyOwnerSee = true;
 
-	//UVideoCallWidget* test = CreateWidget<UVideoCallWidget>(GetWorld(), pWidgetClass);
+	
+	
 	//WidgetSelf->SetWidget(test);
 
-	//LocalCanvas = Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->IconImage;
+	
 
 	// Setup Agora SDK engine
-	SetupSDKEngine();
+
+
 }
 
 //AVTT53Character::AVTT53Character()
@@ -90,7 +92,8 @@ void AVTT53Character::BeginPlay()
 		}
 	}
 
-	//SetWidgetLocal();
+	SetWidgetLocal();
+
 
 	//Join();
 
@@ -98,7 +101,7 @@ void AVTT53Character::BeginPlay()
 
 void AVTT53Character::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-	Leave();
+	//Leave();
 
 	Super::EndPlay(EndPlayReason);
 }
@@ -190,110 +193,19 @@ bool AVTT53Character::GetHasRifle()
 void AVTT53Character::SetWidgetLocal_Implementation()
 {
 
-	UVideoCallWidget* test = CreateWidget<UVideoCallWidget>(GetWorld(), pWidgetClass);
-	WidgetSelf->SetWidget(test);
+	WidgetTest = CreateWidget<UVideoCallWidget>(GetWorld(), pWidgetClass);
+	WidgetSelf->SetWidget(WidgetTest);
+
+	LocalCanvas = Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->IconImage;
 }
 
 void AVTT53Character::Join()
 {
-	agora::rtc::ChannelMediaOptions options;
-	RtcEngineProxy->enableVideo();
-
-	// Automatically subscribe to all audio streams
-	options.autoSubscribeAudio = true;
-
-	options.autoSubscribeVideo = true;
-
-	// Publish the audio collected by the microphone
-	options.publishMicrophoneTrack = true;
-
-	options.publishCameraTrack = true;
-
-	// Set channel profile to live broadcasting
-	options.channelProfile = agora::CHANNEL_PROFILE_TYPE::CHANNEL_PROFILE_COMMUNICATION;
-	// Set user role to broadcaster
-	options.clientRoleType = agora::rtc::CLIENT_ROLE_TYPE::CLIENT_ROLE_BROADCASTER;
-	// Join the channel
-	RtcEngineProxy->joinChannel(TCHAR_TO_ANSI(_token), TCHAR_TO_ANSI(_channelName), 0, options);
+	Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->Join();
 }
 
 void AVTT53Character::Leave()
 {
-	RtcEngineProxy->leaveChannel();
+	Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->Leave();
 }
 
-void AVTT53Character::onLeaveChannel(const agora::rtc::RtcStats& stats)
-{
-	AsyncTask(ENamedThreads::GameThread, [=, this]()
-		{
-			agora::rtc::VideoCanvas videoCanvas;
-			videoCanvas.view = nullptr;
-			videoCanvas.uid = 0;
-			videoCanvas.sourceType = agora::rtc::VIDEO_SOURCE_TYPE::VIDEO_SOURCE_CAMERA;
-			RtcEngineProxy->setupLocalVideo(videoCanvas);
-		});
-}
-
-void AVTT53Character::onUserJoined(agora::rtc::uid_t uid, int elapsed)
-{
-}
-
-void AVTT53Character::onUserOffline(agora::rtc::uid_t uid, agora::rtc::USER_OFFLINE_REASON_TYPE reason)
-{
-}
-
-void AVTT53Character::onJoinChannelSuccess(const char* channel, agora::rtc::uid_t uid, int elapsed)
-{
-	AsyncTask(ENamedThreads::GameThread, [&]()
-		{
-			UE_LOG(LogTemp, Warning, TEXT("JoinChannelSuccess uid: %u"), uid);
-
-			agora::rtc::VideoCanvas videoCanvas;
-			//if(WidgetSelf->GetWidget()){
-				videoCanvas.view = LocalCanvas;
-				videoCanvas.uid = 0;
-				videoCanvas.sourceType = agora::rtc::VIDEO_SOURCE_TYPE::VIDEO_SOURCE_CAMERA;
-				RtcEngineProxy->setupLocalVideo(videoCanvas);
-			//}
-			
-		});
-
-	UID = uid;
-}
-
-void AVTT53Character::CheckAndroidPermission()
-{
-#if PLATFORM_ANDROID
-	// Get the platform name
-	FString pathfromName = UGameplayStatics::GetPlatformName();
-	// Check if the platform is Android
-	if (pathfromName == "Android")
-	{
-		// Array to store Android permissions
-		TArray AndroidPermission;
-		// Add required permissions
-		AndroidPermission.Add(FString("android.permission.RECORD_AUDIO"));
-		AndroidPermission.Add(FString("android.permission.READ_PHONE_STATE"));
-		AndroidPermission.Add(FString("android.permission.WRITE_EXTERNAL_STORAGE"));
-		// Request permissions
-		UAndroidPermissionFunctionLibrary::AcquirePermissions(AndroidPermission);
-	}
-#endif
-}
-
-void AVTT53Character::SetupSDKEngine()
-{
-	// Create RtcEngineContext
-	agora::rtc::RtcEngineContext RtcEngineContext;
-	// Set App ID
-	RtcEngineContext.appId = TCHAR_TO_ANSI(*_appID);
-	// Set event handler
-	RtcEngineContext.eventHandler = this;
-	// Create and initialize RtcEngineProxy
-	RtcEngineProxy = agora::rtc::ue::AgoraUERtcEngine::Get();
-	RtcEngineProxy->initialize(RtcEngineContext);
-}
-
-void AVTT53Character::SetupUI()
-{
-}
