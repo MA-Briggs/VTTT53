@@ -13,11 +13,13 @@ void UVideoCallWidget::SetupSDKEngine()
     // Create and initialize RtcEngineProxy
     RtcEngineProxy = agora::rtc::ue::AgoraUERtcEngine::Get();
     RtcEngineProxy->initialize(RtcEngineContext);
+
 }
 
 void UVideoCallWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
+
     if (IconImage) {
         IconImage->SetDesiredSizeOverride(FVector2D(128.f, 96.f));
     }
@@ -29,16 +31,16 @@ void UVideoCallWidget::NativeDestruct()
 {
     Super::NativeDestruct();
     // Clean up resources
-    if (RtcEngineProxy != nullptr)
-    {
-        RtcEngineProxy->unregisterEventHandler(this);
-        RtcEngineProxy->Release();
-        //delete RtcEngineProxy;
-        RtcEngineProxy = nullptr;
-    }
+    //if (RtcEngineProxy != nullptr)
+    //{
+    //    RtcEngineProxy->unregisterEventHandler(this);
+    //    RtcEngineProxy->Release();
+    //    //delete RtcEngineProxy;
+    //    RtcEngineProxy = nullptr;
+    //}
 }
 
-void UVideoCallWidget::Join()
+void UVideoCallWidget::Join(int IN_UID)
 {
     agora::rtc::ChannelMediaOptions options;
     RtcEngineProxy->enableVideo();
@@ -58,7 +60,7 @@ void UVideoCallWidget::Join()
     // Set user role to broadcaster
     options.clientRoleType = agora::rtc::CLIENT_ROLE_TYPE::CLIENT_ROLE_BROADCASTER;
     // Join the channel
-    RtcEngineProxy->joinChannel(TCHAR_TO_ANSI(_token), TCHAR_TO_ANSI(_channelName), 0, options);
+    RtcEngineProxy->joinChannel(TCHAR_TO_ANSI(_token), TCHAR_TO_ANSI(_channelName), IN_UID, options);
 }
 
 void UVideoCallWidget::Leave()
@@ -81,16 +83,54 @@ void UVideoCallWidget::onLeaveChannel(const agora::rtc::RtcStats& stats)
 
 void UVideoCallWidget::onJoinChannelSuccess(const char* channel, agora::rtc::uid_t uid, int elapsed)
 {
-    AsyncTask(ENamedThreads::GameThread, [=, this]()
-        {
-            UE_LOG(LogTemp, Warning, TEXT("JoinChannelSuccess uid: %u"), uid);
+    if (this) {
+        AsyncTask(ENamedThreads::GameThread, [=, this]()
+            {
+                //UE_LOG(LogTemp, Warning, TEXT("JoinChannelSuccess uid: %u"), uid);
 
-            agora::rtc::VideoCanvas videoCanvas;
-            videoCanvas.view = IconImage;
-            videoCanvas.uid = 0;
-            videoCanvas.sourceType = agora::rtc::VIDEO_SOURCE_TYPE::VIDEO_SOURCE_CAMERA;
-            RtcEngineProxy->setupLocalVideo(videoCanvas);
-        });
-
-    UID = uid;
+                agora::rtc::VideoCanvas videoCanvas;
+                videoCanvas.view = IconImage;
+                videoCanvas.uid = uid;
+                videoCanvas.sourceType = agora::rtc::VIDEO_SOURCE_TYPE::VIDEO_SOURCE_CAMERA;
+                RtcEngineProxy->setupLocalVideo(videoCanvas);
+            });
+    }
+    //UID = uid;
 }
+
+void UVideoCallWidget::onUserJoined(agora::rtc::uid_t uid, int elapsed)
+{
+    for (int i = 0; i <= CPP_Screens.Num(); i++) {
+        if (uid == Cast<URemoteScreenWidget>(CPP_Screens[i]->GetWidget())->UID) {
+            agora::rtc::VideoCanvas videoCanvas;
+            videoCanvas.view = Cast<URemoteScreenWidget>(CPP_Screens[i]->GetWidget())->IconImage;
+            videoCanvas.uid = uid;
+            videoCanvas.sourceType = agora::rtc::VIDEO_SOURCE_TYPE::VIDEO_SOURCE_REMOTE;
+
+            agora::rtc::RtcConnection connection;
+            connection.channelId = TCHAR_TO_ANSI(_channelName);
+
+
+            ((agora::rtc::ue::AgoraUERtcEngine*)RtcEngineProxy)->setupRemoteVideoEx(videoCanvas, connection);
+
+        }
+    }
+}
+
+void UVideoCallWidget::onUserOffline(agora::rtc::uid_t uid, agora::rtc::USER_OFFLINE_REASON_TYPE reason)
+{
+    for (int i = 0; i <= CPP_Screens.Num(); i++) {
+        if (uid == Cast<URemoteScreenWidget>(CPP_Screens[i]->GetWidget())->UID){
+            agora::rtc::VideoCanvas videoCanvas;
+        videoCanvas.view = nullptr;
+        videoCanvas.uid = uid;
+        videoCanvas.sourceType = agora::rtc::VIDEO_SOURCE_TYPE::VIDEO_SOURCE_REMOTE;
+
+        agora::rtc::RtcConnection connection;
+        connection.channelId = TCHAR_TO_ANSI(_channelName);
+
+        ((agora::rtc::ue::AgoraUERtcEngine*)RtcEngineProxy)->setupRemoteVideoEx(videoCanvas, connection);
+        }
+    }
+}
+

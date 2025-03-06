@@ -30,10 +30,17 @@ struct FInputActionValue;
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
 UCLASS(config=Game)
-class AVTT53Character : public ACharacter, public agora::rtc::IRtcEngineEventHandler
+class AVTT53Character : public ACharacter//, public agora::rtc::IRtcEngineEventHandler
 {
 	GENERATED_BODY()
 public:
+	// Fill in your App ID
+	FString _appID = "4ee00587a6914d4ab6fde16ee511dff8";
+	// Fill in your channel name
+	const TCHAR* _channelName = _T("Channel1");
+	// Fill in Token
+	const TCHAR* _token = _T("007eJxTYKi8t2xPt3nhrR9lDCX3Filu1Df5en+v1acTDCu2T2f1mealwGCSmmpgYGphnmhmaWiSYpKYZJaWkmpolppqamiYkpZmcdz3RHpDICNDHNtdVkYGCATxORicMxLz8lJzDBkYAGy+IpQ=");
+
 
 	UFUNCTION(BlueprintCallable)
 	void Join();
@@ -41,8 +48,17 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Leave();
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	int UID;
+
+	
+	//agora::rtc::ue::AgoraUERtcEngine* RtcEngineProxy;
+	// Callback triggered when the local user leaves the channel
+	//void onLeaveChannel(const agora::rtc::RtcStats& stats) override;
 
 
+	// Callback triggered when the local user successfully joins the channel
+	//void onJoinChannelSuccess(const char* channel, agora::rtc::uid_t uid, int elapsed) override;
 public:
 	/** Pawn mesh: 1st person view (arms; seen only by self) */
 	UPROPERTY(VisibleDefaultsOnly, Category=Mesh)
@@ -95,7 +111,7 @@ public:
 	TArray<UWidgetComponent*> CPP_Screens;
 
 	UFUNCTION(BlueprintCallable)
-	void SpawnScreen(int IN_WID);
+	void SpawnScreen(int IN_WID, int IN_UID);
 
 	/** Setter to set the bool */
 	UFUNCTION(BlueprintCallable, Category = Weapon)
@@ -105,7 +121,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	bool GetHasRifle();
 
-	UFUNCTION(Client, Reliable)
+	UFUNCTION(BlueprintCallable)
 	void SetWidgetLocal();
 
 	UPROPERTY(VisibleAnywhere)

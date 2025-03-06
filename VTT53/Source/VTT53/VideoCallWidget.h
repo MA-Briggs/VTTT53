@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/Image.h"
+#include "RemoteScreenWidget.h"
+#include <Components/WidgetComponent.h>
 
 #include "AgoraPluginInterface.h"
 
@@ -27,7 +29,7 @@ public:
 	// Fill in your channel name
 	const TCHAR* _channelName = _T("Channel1");
 	// Fill in Token
-	const TCHAR* _token = _T("007eJxTYIht044/ufdNcOSqMNsj6q7vXBPSTh62FTnVu8LpkMHr55kKDCapqQYGphbmiWaWhiYpJolJZmkpqYZmqammhoYpaWkWpu+PpjcEMjK0S71iZGSAQBCfg8E5IzEvLzXHkIEBABc7Iho=");
+	const TCHAR* _token = _T("007eJxTYKi8t2xPt3nhrR9lDCX3Filu1Df5en+v1acTDCu2T2f1mealwGCSmmpgYGphnmhmaWiSYpKYZJaWkmpolppqamiYkpZmcdz3RHpDICNDHNtdVkYGCATxORicMxLz8lJzDBkYAGy+IpQ=");
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	int UID = 0;
@@ -35,18 +37,27 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	TObjectPtr<UImage> IconImage;
 
-	UFUNCTION(BlueprintCallable)
-	void Join();
-	UFUNCTION(BlueprintCallable)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TArray<UWidgetComponent*> CPP_Screens;
+
+	//UFUNCTION(BlueprintCallable)
+	void Join(int IN_UID);
+	//UFUNCTION(BlueprintCallable)
 	void Leave();
+
 	agora::rtc::ue::AgoraUERtcEngine* RtcEngineProxy;
+	
 	// Callback triggered when the local user leaves the channel
 	void onLeaveChannel(const agora::rtc::RtcStats& stats) override;
 
 	
 	// Callback triggered when the local user successfully joins the channel
 	void onJoinChannelSuccess(const char* channel, agora::rtc::uid_t uid, int elapsed) override;
-private:
+
+	void onUserJoined(agora::rtc::uid_t uid, int elapsed) override;
+
+	void onUserOffline(agora::rtc::uid_t uid, agora::rtc::USER_OFFLINE_REASON_TYPE reason) override;
+
 
 	// Create and initialize IRtcEngine
 	void SetupSDKEngine();
