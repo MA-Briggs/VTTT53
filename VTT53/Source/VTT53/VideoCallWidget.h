@@ -29,7 +29,7 @@ public:
 	// Fill in your channel name
 	const TCHAR* _channelName = _T("Channel1");
 	// Fill in Token
-	const TCHAR* _token = _T("007eJxTYKi8t2xPt3nhrR9lDCX3Filu1Df5en+v1acTDCu2T2f1mealwGCSmmpgYGphnmhmaWiSYpKYZJaWkmpolppqamiYkpZmcdz3RHpDICNDHNtdVkYGCATxORicMxLz8lJzDBkYAGy+IpQ=");
+	const TCHAR* _token = _T("007eJxTYPh6bcsNm40VltYr/k78tDpHtn6GuY86++IkjvP73s37f6dcgcEkNdXAwNTCPNHM0tAkxSQxySwtJdXQLDXV1NAwJS3NImvxyfSGQEYG2QkXWBkZIBDE52BwzkjMy0vNMWRgAACpoSON");
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	int UID = 0;
@@ -40,16 +40,15 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TArray<UWidgetComponent*> CPP_Screens;
 
-	//UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable)
 	void Join(int IN_UID);
-	//UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable)
 	void Leave();
 
 	agora::rtc::ue::AgoraUERtcEngine* RtcEngineProxy;
 	
 	// Callback triggered when the local user leaves the channel
 	void onLeaveChannel(const agora::rtc::RtcStats& stats) override;
-
 	
 	// Callback triggered when the local user successfully joins the channel
 	void onJoinChannelSuccess(const char* channel, agora::rtc::uid_t uid, int elapsed) override;

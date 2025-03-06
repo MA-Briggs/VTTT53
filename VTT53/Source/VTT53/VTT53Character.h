@@ -42,10 +42,10 @@ public:
 	const TCHAR* _token = _T("007eJxTYKi8t2xPt3nhrR9lDCX3Filu1Df5en+v1acTDCu2T2f1mealwGCSmmpgYGphnmhmaWiSYpKYZJaWkmpolppqamiYkpZmcdz3RHpDICNDHNtdVkYGCATxORicMxLz8lJzDBkYAGy+IpQ=");
 
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Client, Reliable)
 	void Join();
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Client, Reliable)
 	void Leave();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
@@ -121,7 +121,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	bool GetHasRifle();
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Client, Reliable)
 	void SetWidgetLocal();
 
 	UPROPERTY(VisibleAnywhere)

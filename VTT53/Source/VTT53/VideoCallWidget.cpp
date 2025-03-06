@@ -31,13 +31,13 @@ void UVideoCallWidget::NativeDestruct()
 {
     Super::NativeDestruct();
     // Clean up resources
-    //if (RtcEngineProxy != nullptr)
-    //{
-    //    RtcEngineProxy->unregisterEventHandler(this);
-    //    RtcEngineProxy->Release();
-    //    //delete RtcEngineProxy;
-    //    RtcEngineProxy = nullptr;
-    //}
+    if (RtcEngineProxy != nullptr && RtcEngineProxy->NativeRtcEnginePtr() != nullptr)
+    {
+        RtcEngineProxy->unregisterEventHandler(this);
+        RtcEngineProxy->Release();
+        //delete RtcEngineProxy;
+        RtcEngineProxy = nullptr;
+    }
 }
 
 void UVideoCallWidget::Join(int IN_UID)
@@ -84,13 +84,13 @@ void UVideoCallWidget::onLeaveChannel(const agora::rtc::RtcStats& stats)
 void UVideoCallWidget::onJoinChannelSuccess(const char* channel, agora::rtc::uid_t uid, int elapsed)
 {
     if (this) {
-        AsyncTask(ENamedThreads::GameThread, [=, this]()
+        AsyncTask(ENamedThreads::GameThread, [&, this]()
             {
                 //UE_LOG(LogTemp, Warning, TEXT("JoinChannelSuccess uid: %u"), uid);
 
                 agora::rtc::VideoCanvas videoCanvas;
                 videoCanvas.view = IconImage;
-                videoCanvas.uid = uid;
+                videoCanvas.uid = 0;
                 videoCanvas.sourceType = agora::rtc::VIDEO_SOURCE_TYPE::VIDEO_SOURCE_CAMERA;
                 RtcEngineProxy->setupLocalVideo(videoCanvas);
             });

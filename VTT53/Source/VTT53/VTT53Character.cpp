@@ -201,17 +201,18 @@ bool AVTT53Character::GetHasRifle()
 	return bHasRifle;
 }
 
-void AVTT53Character::SetWidgetLocal()
+void AVTT53Character::SetWidgetLocal_Implementation()
 {
+
 
 	WidgetTest = CreateWidget<UVideoCallWidget>(GetWorld(), pWidgetClass);
 	//WidgetTest->SetupSDKEngine(RtcEngineProxy);
 	WidgetSelf->SetWidget(WidgetTest);
 
-	LocalCanvas = Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->IconImage;
+	//LocalCanvas = Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->IconImage;
 }
 
-void AVTT53Character::Join()
+void AVTT53Character::Join_Implementation()
 {
 	//agora::rtc::ChannelMediaOptions options;
 	//RtcEngineProxy->enableVideo();
@@ -232,14 +233,15 @@ void AVTT53Character::Join()
 	//options.clientRoleType = agora::rtc::CLIENT_ROLE_TYPE::CLIENT_ROLE_BROADCASTER;
 	//// Join the channel
 	//RtcEngineProxy->joinChannel(TCHAR_TO_ANSI(_token), TCHAR_TO_ANSI(_channelName), UID, options);
-	SetWidgetLocal();
+	//SetWidgetLocal();
 	Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->Join(UID);
 }
 
-void AVTT53Character::Leave()
+void AVTT53Character::Leave_Implementation()
 {
 //	RtcEngineProxy->leaveChannel();
 //
 	Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->Leave();
+
 }
 
