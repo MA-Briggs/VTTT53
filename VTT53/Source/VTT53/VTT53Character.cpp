@@ -80,9 +80,10 @@ AVTT53Character::AVTT53Character()
 	WidgetSelf->SetupAttachment(FirstPersonCameraComponent);
 	WidgetSelf->SetVisibility(true);
 	WidgetSelf->SetDrawAtDesiredSize(true);
-	WidgetSelf->bOnlyOwnerSee = true;
+	//this->getlocal
+	WidgetSelf->SetOnlyOwnerSee(true);
 
-
+	//WidgetSelf->GetOwner();
 
 }
 
@@ -102,9 +103,11 @@ void AVTT53Character::BeginPlay()
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
-		
+		//WidgetSelf->SetOwnerPlayer(PlayerController->GetLocalPlayer());
 	}
-
+	if (!IsLocallyControlled()) {
+		WidgetSelf->GetWidget()->SetVisibility(ESlateVisibility::Hidden);
+	}
 	SetWidgetLocal();
 
 }
@@ -143,6 +146,7 @@ void AVTT53Character::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps); 
 
 	DOREPLIFETIME(AVTT53Character, CPP_Screens);
+	DOREPLIFETIME(AVTT53Character, UID);
 }
 
 
@@ -188,8 +192,7 @@ void AVTT53Character::SpawnScreen(int IN_WID, int IN_UID)
 	NewScreen->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 	NewScreen->RegisterComponent();
 	CPP_Screens.Add(NewScreen);
-	Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->CPP_Screens.Add(NewScreen);
-} 
+}
 
 void AVTT53Character::SetHasRifle(bool bNewHasRifle)
 {
@@ -206,41 +209,22 @@ void AVTT53Character::SetWidgetLocal_Implementation()
 
 
 	WidgetTest = CreateWidget<UVideoCallWidget>(GetWorld(), pWidgetClass);
-	//WidgetTest->SetupSDKEngine(RtcEngineProxy);
 	WidgetSelf->SetWidget(WidgetTest);
+	WidgetSelf->SetOnlyOwnerSee(true);
 
-	//LocalCanvas = Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->IconImage;
 }
 
 void AVTT53Character::Join_Implementation()
 {
-	//agora::rtc::ChannelMediaOptions options;
-	//RtcEngineProxy->enableVideo();
+	
+	Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->CPP_Screens = CPP_Screens;
 
-	//// Automatically subscribe to all audio streams
-	//options.autoSubscribeAudio = true;
-
-	//options.autoSubscribeVideo = true;
-
-	//// Publish the audio collected by the microphone
-	//options.publishMicrophoneTrack = true;
-
-	//options.publishCameraTrack = true;
-
-	//// Set channel profile to live broadcasting
-	//options.channelProfile = agora::CHANNEL_PROFILE_TYPE::CHANNEL_PROFILE_COMMUNICATION;
-	//// Set user role to broadcaster
-	//options.clientRoleType = agora::rtc::CLIENT_ROLE_TYPE::CLIENT_ROLE_BROADCASTER;
-	//// Join the channel
-	//RtcEngineProxy->joinChannel(TCHAR_TO_ANSI(_token), TCHAR_TO_ANSI(_channelName), UID, options);
-	//SetWidgetLocal();
 	Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->Join(UID);
 }
 
 void AVTT53Character::Leave_Implementation()
 {
-//	RtcEngineProxy->leaveChannel();
-//
+
 	Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->Leave();
 
 }

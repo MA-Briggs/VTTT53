@@ -48,7 +48,7 @@ public:
 	UFUNCTION(BlueprintCallable, Client, Reliable)
 	void Leave();
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Replicated)
 	int UID;
 
 	

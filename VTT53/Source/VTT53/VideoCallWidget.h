@@ -40,9 +40,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TArray<UWidgetComponent*> CPP_Screens;
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Client, Reliable)
 	void Join(int IN_UID);
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Client, Reliable)
 	void Leave();
 
 	agora::rtc::ue::AgoraUERtcEngine* RtcEngineProxy;
