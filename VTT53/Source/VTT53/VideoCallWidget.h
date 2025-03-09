@@ -37,7 +37,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	TObjectPtr<UImage> IconImage;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TArray<UWidgetComponent*> CPP_Screens;
 
 	UFUNCTION(BlueprintCallable, Client, Reliable)
