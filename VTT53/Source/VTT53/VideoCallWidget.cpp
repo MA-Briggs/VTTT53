@@ -5,15 +5,16 @@
 
 void UVideoCallWidget::SetupSDKEngine()
 {
-    agora::rtc::RtcEngineContext RtcEngineContext;
-    // Set App ID
-    RtcEngineContext.appId = TCHAR_TO_ANSI(*_appID);
-    // Set event handler
-    RtcEngineContext.eventHandler = this;
-    // Create and initialize RtcEngineProxy
-    RtcEngineProxy = agora::rtc::ue::AgoraUERtcEngine::Get();
-    RtcEngineProxy->initialize(RtcEngineContext);
-
+    if (IconImage != nullptr) {
+        agora::rtc::RtcEngineContext RtcEngineContext;
+        // Set App ID
+        RtcEngineContext.appId = TCHAR_TO_ANSI(*_appID);
+        // Set event handler
+        RtcEngineContext.eventHandler = this;
+        // Create and initialize RtcEngineProxy
+        RtcEngineProxy = agora::rtc::ue::AgoraUERtcEngine::Get();
+        RtcEngineProxy->initialize(RtcEngineContext);
+    }
 }
 
 void UVideoCallWidget::NativeConstruct()
@@ -40,7 +41,7 @@ void UVideoCallWidget::NativeDestruct()
     }
 }
 
-void UVideoCallWidget::Join_Implementation(int IN_UID)
+void UVideoCallWidget::Join(int IN_UID)
 {
     agora::rtc::ChannelMediaOptions options;
     RtcEngineProxy->enableVideo();
@@ -63,7 +64,7 @@ void UVideoCallWidget::Join_Implementation(int IN_UID)
     RtcEngineProxy->joinChannel(TCHAR_TO_ANSI(_token), TCHAR_TO_ANSI(_channelName), IN_UID, options);
 }
 
-void UVideoCallWidget::Leave_Implementation()
+void UVideoCallWidget::Leave()
 {
     RtcEngineProxy->leaveChannel();
 }

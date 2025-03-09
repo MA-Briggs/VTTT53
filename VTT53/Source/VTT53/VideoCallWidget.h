@@ -29,7 +29,7 @@ public:
 	// Fill in your channel name
 	const TCHAR* _channelName = _T("Channel1");
 	// Fill in Token
-	const TCHAR* _token = _T("007eJxTYPh6bcsNm40VltYr/k78tDpHtn6GuY86++IkjvP73s37f6dcgcEkNdXAwNTCPNHM0tAkxSQxySwtJdXQLDXV1NAwJS3NImvxyfSGQEYG2QkXWBkZIBDE52BwzkjMy0vNMWRgAACpoSON");
+	const TCHAR* _token = _T("007eJxTYKhi/Xz41Cb2ZwWNRgl/m0x7NwbF/9+43zT/1ttDP550mp5SYDBJTTUwMLUwTzSzNDRJMUlMMktLSTU0S001NTRMSUuz8JE4l94QyMgQF7OKiZEBAkF8DgbnjMS8vNQcQwYGAM5bI8U=");
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	int UID = 0;
@@ -40,9 +40,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TArray<UWidgetComponent*> CPP_Screens;
 
-	UFUNCTION(BlueprintCallable, Client, Reliable)
+	UFUNCTION(BlueprintCallable)
 	void Join(int IN_UID);
-	UFUNCTION(BlueprintCallable, Client, Reliable)
+	UFUNCTION(BlueprintCallable)
 	void Leave();
 
 	agora::rtc::ue::AgoraUERtcEngine* RtcEngineProxy;
