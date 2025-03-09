@@ -105,10 +105,10 @@ void AVTT53Character::BeginPlay()
 		}
 		//WidgetSelf->SetOwnerPlayer(PlayerController->GetLocalPlayer());
 	}
-	if (!IsLocallyControlled()) {
+	/*if (!IsLocallyControlled()) {
 		WidgetSelf->GetWidget()->SetVisibility(ESlateVisibility::Hidden);
 	}
-	SetWidgetLocal();
+	SetWidgetLocal();*/
 
 }
 
@@ -208,24 +208,24 @@ void AVTT53Character::SetWidgetLocal_Implementation()
 {
 
 
-	WidgetTest = CreateWidget<UVideoCallWidget>(GetWorld(), pWidgetClass);
-	WidgetSelf->SetWidget(WidgetTest);
-	WidgetSelf->SetOnlyOwnerSee(true);
+	//WidgetTest = CreateWidget<UVideoCallWidget>(GetWorld(), pWidgetClass);
+	//WidgetSelf->SetWidget(WidgetTest);
+	//WidgetSelf->SetOnlyOwnerSee(true);
 
 }
 
 void AVTT53Character::Join_Implementation()
 {
-	
-	Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->CPP_Screens = CPP_Screens;
+	//
+	//Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->CPP_Screens = CPP_Screens;
 
-	Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->Join(UID);
+	//Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->Join(UID);
 }
 
 void AVTT53Character::Leave_Implementation()
 {
 
-	Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->Leave();
+	//Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->Leave();
 
 }
 
