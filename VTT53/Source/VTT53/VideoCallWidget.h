@@ -32,7 +32,7 @@ public:
 	const TCHAR* _token = _T("007eJxTYKhi/Xz41Cb2ZwWNRgl/m0x7NwbF/9+43zT/1ttDP550mp5SYDBJTTUwMLUwTzSzNDRJMUlMMktLSTU0S001NTRMSUuz8JE4l94QyMgQF7OKiZEBAkF8DgbnjMS8vNQcQwYGAM5bI8U=");
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	int UID = 0;
+	int UID;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	TObjectPtr<UImage> IconImage;

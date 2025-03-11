@@ -14,19 +14,6 @@
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
-//void AVTT53Character::onLeaveChannel(const agora::rtc::RtcStats& stats)
-//{
-//	Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->onLeaveChannel(stats, RtcEngineProxy);
-//}
-
-//void AVTT53Character::onJoinChannelSuccess(const char* channel, agora::rtc::uid_t uid, int elapsed)
-//{
-//	Cast<UVideoCallWidget>(WidgetSelf->GetWidget())->onJoinChannelSuccess(channel, uid, elapsed, RtcEngineProxy);
-//}
-
-//////////////////////////////////////////////////////////////////////////
-// AVTT53Character
-//const class FPostConstructInitializeProperties& PCIP) : Super(PCIP)
 AVTT53Character::AVTT53Character()
 {
 	// Character doesnt have a rifle at start
@@ -50,40 +37,12 @@ AVTT53Character::AVTT53Character()
 	//Mesh1P->SetRelativeRotation(FRotator(0.9f, -19.19f, 5.2f));
 	Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
 
-	//agora::rtc::RtcEngineContext RtcEngineContext;
-	//// Set App ID
-	//RtcEngineContext.appId = TCHAR_TO_ANSI(*_appID);
-	//// Set event handler
-	//RtcEngineContext.eventHandler = this;
-	//// Create and initialize RtcEngineProxy
-	//RtcEngineProxy = agora::rtc::ue::AgoraUERtcEngine::Get();
-	//RtcEngineProxy->initialize(RtcEngineContext);
-
-
-
-	static ConstructorHelpers::FClassFinder<UVideoCallWidget> MyWidgetFinder(TEXT("/Game/FirstPerson/Maps/BP_VideoCall"));
-	if (MyWidgetFinder.Succeeded())
-	{
-		pWidgetClass = MyWidgetFinder.Class;
-	}
-
 	static ConstructorHelpers::FClassFinder<URemoteScreenWidget> MyWidgetFinder2(TEXT("/Game/FirstPerson/Maps/TestWidget"));
 	if (MyWidgetFinder2.Succeeded())
 	{
 		pWidgetClass2 = MyWidgetFinder2.Class;
 	}
 
-	WidgetSelf = CreateDefaultSubobject<UWidgetComponent>(TEXT("Widget"));
-	WidgetSelf->SetWidgetSpace(EWidgetSpace::Screen);
-	const FQuat quat1 = FQuat(FVector(0.f, 0.f, 1.f), FMath::DegreesToRadians(180.f));
-	WidgetSelf->SetRelativeLocationAndRotation(FVector(50.f, 0.f, 25.f), quat1);
-	WidgetSelf->SetupAttachment(FirstPersonCameraComponent);
-	WidgetSelf->SetVisibility(true);
-	WidgetSelf->SetDrawAtDesiredSize(true);
-	//this->getlocal
-	WidgetSelf->SetOnlyOwnerSee(true);
-
-	//WidgetSelf->GetOwner();
 
 }
 
@@ -105,10 +64,7 @@ void AVTT53Character::BeginPlay()
 		}
 		//WidgetSelf->SetOwnerPlayer(PlayerController->GetLocalPlayer());
 	}
-	/*if (!IsLocallyControlled()) {
-		WidgetSelf->GetWidget()->SetVisibility(ESlateVisibility::Hidden);
-	}
-	SetWidgetLocal();*/
+
 
 }
 
@@ -204,15 +160,6 @@ bool AVTT53Character::GetHasRifle()
 	return bHasRifle;
 }
 
-void AVTT53Character::SetWidgetLocal_Implementation()
-{
-
-
-	//WidgetTest = CreateWidget<UVideoCallWidget>(GetWorld(), pWidgetClass);
-	//WidgetSelf->SetWidget(WidgetTest);
-	//WidgetSelf->SetOnlyOwnerSee(true);
-
-}
 
 void AVTT53Character::Join_Implementation()
 {

@@ -34,14 +34,7 @@ class AVTT53Character : public ACharacter//, public agora::rtc::IRtcEngineEventH
 {
 	GENERATED_BODY()
 public:
-	// Fill in your App ID
-	FString _appID = "4ee00587a6914d4ab6fde16ee511dff8";
-	// Fill in your channel name
-	const TCHAR* _channelName = _T("Channel1");
-	// Fill in Token
-	const TCHAR* _token = _T("007eJxTYKi8t2xPt3nhrR9lDCX3Filu1Df5en+v1acTDCu2T2f1mealwGCSmmpgYGphnmhmaWiSYpKYZJaWkmpolppqamiYkpZmcdz3RHpDICNDHNtdVkYGCATxORicMxLz8lJzDBkYAGy+IpQ=");
-
-
+	
 	UFUNCTION(BlueprintCallable, Client, Reliable)
 	void Join();
 
@@ -63,15 +56,6 @@ public:
 	/** Pawn mesh: 1st person view (arms; seen only by self) */
 	UPROPERTY(VisibleDefaultsOnly, Category=Mesh)
 	USkeletalMeshComponent* Mesh1P;
-
-	UPROPERTY(VisibleDefaultsOnly)
-	UWidgetComponent* WidgetSelf;	
-	
-	UPROPERTY(VisibleDefaultsOnly)
-	UVideoCallWidget* WidgetTest;	
-
-	UPROPERTY(BlueprintReadWrite)
-	UImage* LocalCanvas = nullptr;
 
 	/** First person camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
@@ -121,11 +105,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	bool GetHasRifle();
 
-	UFUNCTION(BlueprintCallable, Client, Reliable)
-	void SetWidgetLocal();
-
-	UPROPERTY(VisibleAnywhere)
-	TSubclassOf<class UUserWidget> pWidgetClass;
 
 	UPROPERTY(VisibleAnywhere)
 	TSubclassOf<class UUserWidget> pWidgetClass2;
