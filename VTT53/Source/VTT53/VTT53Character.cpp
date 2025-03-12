@@ -37,11 +37,11 @@ AVTT53Character::AVTT53Character()
 	//Mesh1P->SetRelativeRotation(FRotator(0.9f, -19.19f, 5.2f));
 	Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
 
-	static ConstructorHelpers::FClassFinder<URemoteScreenWidget> MyWidgetFinder2(TEXT("/Game/FirstPerson/Maps/TestWidget"));
-	if (MyWidgetFinder2.Succeeded())
-	{
-		pWidgetClass2 = MyWidgetFinder2.Class;
-	}
+	//static ConstructorHelpers::FClassFinder<URemoteScreenWidget> MyWidgetFinder2(TEXT("/Game/FirstPerson/Maps/TestWidget"));
+	//if (MyWidgetFinder2.Succeeded())
+	//{
+	//	pWidgetClass2 = MyWidgetFinder2.Class;
+	//}
 
 
 }
@@ -135,19 +135,19 @@ void AVTT53Character::Look(const FInputActionValue& Value)
 
 void AVTT53Character::SpawnScreen(int IN_WID, int IN_UID)
 {
-	UWidgetComponent* NewScreen = NewObject<UWidgetComponent>(this); //CreateDefaultSubobject<UWidgetComponent>(TEXT("Widget"));
-	NewScreen->SetWidgetSpace(EWidgetSpace::World);
-	NewScreen->SetDrawAtDesiredSize(true);
+	//UWidgetComponent* NewScreen = NewObject<UWidgetComponent>(this); //CreateDefaultSubobject<UWidgetComponent>(TEXT("Widget"));
+	//NewScreen->SetWidgetSpace(EWidgetSpace::World);
+	//NewScreen->SetDrawAtDesiredSize(true);
 
 
-	URemoteScreenWidget* NewWidget = CreateWidget<URemoteScreenWidget>(GetWorld(), pWidgetClass2);
-	NewWidget->SetVisibility(ESlateVisibility::Visible);
-	NewWidget->WID = IN_WID;
-	NewWidget->UID = IN_UID;
-	NewScreen->SetWidget(NewWidget);
-	NewScreen->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
-	NewScreen->RegisterComponent();
-	CPP_Screens.Add(NewScreen);
+	//URemoteScreenWidget* NewWidget = CreateWidget<URemoteScreenWidget>(GetWorld(), pWidgetClass2);
+	//NewWidget->SetVisibility(ESlateVisibility::Visible);
+	//NewWidget->WID = IN_WID;
+	//NewWidget->UID = IN_UID;
+	//NewScreen->SetWidget(NewWidget);
+	//NewScreen->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
+	//NewScreen->RegisterComponent();
+	//CPP_Screens.Add(NewScreen);
 }
 
 void AVTT53Character::SetHasRifle(bool bNewHasRifle)

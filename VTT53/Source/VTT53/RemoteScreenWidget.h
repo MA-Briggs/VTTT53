@@ -18,6 +18,7 @@ class VTT53_API URemoteScreenWidget : public UUserWidget
 public:
 	UPROPERTY(BlueprintReadWrite)
 	int WID;
+	UPROPERTY(BlueprintReadWrite)
 	int UID;
 
 	// Fill in your App ID

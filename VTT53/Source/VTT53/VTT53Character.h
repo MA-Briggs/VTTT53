@@ -106,8 +106,8 @@ public:
 	bool GetHasRifle();
 
 
-	UPROPERTY(VisibleAnywhere)
-	TSubclassOf<class UUserWidget> pWidgetClass2;
+	//UPROPERTY(VisibleAnywhere)
+	//TSubclassOf<class UUserWidget> pWidgetClass2;
 
 protected:
 	/** Called for movement input */

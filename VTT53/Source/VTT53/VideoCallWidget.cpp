@@ -101,10 +101,10 @@ void UVideoCallWidget::onJoinChannelSuccess(const char* channel, agora::rtc::uid
 
 void UVideoCallWidget::onUserJoined(agora::rtc::uid_t uid, int elapsed)
 {
-    for (int i = 0; i <= CPP_Screens.Num(); i++) {
-        if (uid == Cast<URemoteScreenWidget>(CPP_Screens[i]->GetWidget())->UID) {
+    for (auto& Screen : CPP_Screens) {
+        if (uid == Cast<URemoteScreenWidget>(Screen->GetWidget())->UID) {
             agora::rtc::VideoCanvas videoCanvas;
-            videoCanvas.view = Cast<URemoteScreenWidget>(CPP_Screens[i]->GetWidget())->IconImage;
+            videoCanvas.view = Cast<URemoteScreenWidget>(Screen->GetWidget())->IconImage;
             videoCanvas.uid = uid;
             videoCanvas.sourceType = agora::rtc::VIDEO_SOURCE_TYPE::VIDEO_SOURCE_REMOTE;
 
@@ -120,8 +120,8 @@ void UVideoCallWidget::onUserJoined(agora::rtc::uid_t uid, int elapsed)
 
 void UVideoCallWidget::onUserOffline(agora::rtc::uid_t uid, agora::rtc::USER_OFFLINE_REASON_TYPE reason)
 {
-    for (int i = 0; i <= CPP_Screens.Num(); i++) {
-        if (uid == Cast<URemoteScreenWidget>(CPP_Screens[i]->GetWidget())->UID){
+    for (auto& Screen : CPP_Screens) {
+        if (uid == Cast<URemoteScreenWidget>(Screen->GetWidget())->UID) {
             agora::rtc::VideoCanvas videoCanvas;
             videoCanvas.view = nullptr;
             videoCanvas.uid = uid;
