@@ -56,3 +56,6 @@ SP,0,NULL,
 GP,0,NULL,
 Darkvision,60,NULL,
 Speed,30,NULL,
+Spellcasting Ability,NULL,NULL,n/a
+SpellDC,0,NULL,
+SpellAttack,0,NULL,
