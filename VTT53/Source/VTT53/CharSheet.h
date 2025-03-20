@@ -28,6 +28,41 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)		
 	FString Text = ""; 
 };
+USTRUCT(BlueprintType)
+struct FCharSpellData : public FTableRowBase {
+	GENERATED_USTRUCT_BODY()
+public:
+	//FLevelUpData() : XPtoLvl(0), AdditionalHP(0) {} 	
+	/** The 'Name' column is the same as the XP Level */
+	/** XP to get to the given level from the previous level */
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)
+	int32 Level = NULL; 		/** Icon to use for Achivement */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)
+	FString School = "";
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)
+	FString Damage = "";
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)
+	FString SavingThrow = "";
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)
+	FString AttackRoll = "";
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)
+	FString CastingTime = "";
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)
+	FString Range = "";
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)
+	bool Verbal = NULL;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)
+	bool Somatic = NULL;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)
+	bool Material = NULL;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)
+	FString Component = "";
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)
+	FString Duration = "";
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)
+	FString Description = "";
+};
 
 UCLASS()
 class VTT53_API UCharSheet : public UUserWidget
