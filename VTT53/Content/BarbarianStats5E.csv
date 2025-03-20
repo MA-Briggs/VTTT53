@@ -1,0 +1,58 @@
+,Ints,Bool,Text
+STR,15,NULL,
+DEX,15,NULL,
+CON,14,NULL,
+INT,8,NULL,
+WIS,12,NULL,
+CHA,10,NULL,
+Acrobatics,NULL,0,
+Animal Handling,NULL,0,
+Arcana,NULL,0,"	"
+Athletics,NULL,1,
+Deception,NULL,0,
+History,NULL,0,
+Insight,NULL,0,
+Intimidation,NULL,1,
+Investigation,NULL,0,
+Medicine,NULL,0,
+Nature,NULL,0,
+Perception,NULL,1,
+Performance,NULL,1,
+Persuasion,NULL,0,
+Religion,NULL,0,
+Sleight of Hand,NULL,0,
+Stealth,NULL,0,
+Survival,NULL,0,
+Str Sav,NULL,1,
+Dex Sav,NULL,0,
+Con Sav,NULL,1,
+Int Sav,NULL,0,
+Wis Sav,NULL,0,
+Cha Sav,NULL,0,
+Prof Mod,NULL,2,"	"
+Proficiencies,NULL,NULL,"Simple and martial weapons;
+Light and medium armor;
+Shields;
+Disguise Kit;
+Drum
+"
+Languages,NULL,NULL,"Draconic		"
+Traits,NULL,NULL,"DIVINE FURY (1/turn):Add 1d6+2 to one attack while raging. The damage is radiant or necrotic;RECKLESS ATTACK: You gain advantage on melee weapon attack rolls using Strength during this turn, but attack rolls against you have advantage until your next turn;RAGE (3/long rest). 
+You can enter a rage as a bonus action. Your rage last 1 minute and grants you the following benefits: 
+- you have advantage on Strength checks and saving throws
+- when you make a melee weapon attack using Strength, you gain a +2 bonus to the damage roll. 
+- you have resistance to bludgeoning, piercing, and slashing damage;DANGER SENSE:You have advantage on Dexterity saving throws against effects that you can see;PACK TACTICS:You have advantage on an attack roll against a creature if at least one of your allies is within 5 feet of the creature and the ally isn't incapacitated;GROVEL, COWER AND BEG (1/short rest):As an action on your turn, you can cower pathetically to distract nearby foes. Until the end of your next turn, your allies gain advantage on attack rolls against enemies within 10 feet of you that you can see;SUNLIGHT SENSITIVITY: You have disadvantage on attack rolls and on Wisdom (Perception) checks that rely on sight when you, the target of your attack, or whatever you are trying to perceive is in direct sunlight;DARKVISION (60 ft.)"
+HitDie,NULL,NULL,4d12
+MaxHealth,41,NULL,
+StartingInventory,NULL,NULL,"lucky charm (non-magical)
+drum
+bedroll
+rope (50 ft.)
+torch
+tinderbox
+waterskin"
+CP,0,NULL,"	"
+SP,0,NULL,
+GP,0,NULL,
+Darkvision,60,NULL,
+Speed,30,NULL,

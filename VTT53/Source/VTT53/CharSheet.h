@@ -29,6 +29,20 @@ public:
 	FString Text = ""; 
 };
 USTRUCT(BlueprintType)
+struct FCharWeaponData : public FTableRowBase { 
+GENERATED_USTRUCT_BODY() 	
+public: 		
+	//FLevelUpData() : XPtoLvl(0), AdditionalHP(0) {} 	
+	/** The 'Name' column is the same as the XP Level */ 		
+	/** XP to get to the given level from the previous level */	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)		
+	int32 AttackBonus = NULL; 		/** Icon to use for Achivement */		
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)		
+	FString Damage = ""; 
+};
+USTRUCT(BlueprintType)
 struct FCharSpellData : public FTableRowBase {
 	GENERATED_USTRUCT_BODY()
 public:
