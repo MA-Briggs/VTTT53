@@ -59,7 +59,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)
 	FString SavingThrow = "";
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)
-	FString AttackRoll = "";
+	bool AttackRoll = false;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)
 	FString CastingTime = "";
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)
