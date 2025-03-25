@@ -29,7 +29,7 @@ Con Sav,NULL,1,
 Int Sav,NULL,0,
 Wis Sav,NULL,0,
 Cha Sav,NULL,1,
-Prof Mod,NULL,2,"	"
+Prof Mod,2,0,"	"
 Proficiencies,NULL,NULL,"Daggers;
 darts;
 slings;
