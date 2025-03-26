@@ -29,7 +29,7 @@ public:
 	// Fill in your channel name
 	const TCHAR* _channelName = _T("Channel1");
 	// Fill in Token
-	const TCHAR* _token = _T("007eJxTYPiYnSTCvLDekvPVtwj1TO39hzumZM5pmm7x+GeX/VW56XwKDCapqQYGphbmiWaWhiYpJolJZmkpqYZmqammhoYpaWkWuRaX0xsCGRlEd+xhZmSAQBCfg8E5IzEvLzXHkIEBAL8mIMg=");
+	const TCHAR* _token = _T("007eJxTYBB7Wv+dW3nluZy5p1e1vtSzKhY4f+uU+2Y3dcHHs3t5ZGUVGExSUw0MTC3ME80sDU1STBKTzNJSUg3NUlNNDQ1T0tIsLKQfpzcEMjJMn1zBysgAgSA+B4NzRmJeXmqOIQMDAMPlIG8=");
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	int UID;
