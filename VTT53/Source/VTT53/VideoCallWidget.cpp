@@ -69,6 +69,28 @@ void UVideoCallWidget::Leave()
     RtcEngineProxy->leaveChannel();
 }
 
+void UVideoCallWidget::MuteVideo()
+{
+    RtcEngineProxy->muteLocalVideoStream(true);
+}
+
+void UVideoCallWidget::UnMuteVideo()
+{
+    RtcEngineProxy->muteLocalVideoStream(false);
+
+}
+
+void UVideoCallWidget::MuteAudio()
+{
+    RtcEngineProxy->muteLocalAudioStream(true);
+}
+
+void UVideoCallWidget::UnMuteAudio()
+{
+    RtcEngineProxy->muteLocalAudioStream(false);
+
+}
+
 void UVideoCallWidget::onLeaveChannel(const agora::rtc::RtcStats& stats)
 {
     AsyncTask(ENamedThreads::GameThread, [=, this]()

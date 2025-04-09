@@ -64,4 +64,6 @@ Darkvision,60,NULL,
 Speed,30,NULL,
 Spellcasting Ability,NULL,NULL,CHA
 SpellDC,13,NULL,
-SpellAttack,5,NULL,
+SpellAttack,,NULL,+5
+SpellSlots1,4,NULL,
+SpellSlots2,3,NULL,

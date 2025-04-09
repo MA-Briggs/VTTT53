@@ -37,7 +37,7 @@ public:
 	/** XP to get to the given level from the previous level */	
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)		
-	int32 AttackBonus = NULL; 		/** Icon to use for Achivement */		
+	FString AttackBonus = ""; 		/** Icon to use for Achivement */
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharSheet)		
 	FString Damage = ""; 

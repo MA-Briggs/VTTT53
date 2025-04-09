@@ -1,0 +1,60 @@
+,Ints,Bool,Text
+STR,8,NULL,
+DEX,16,NULL,
+CON,13,NULL,
+INT,8,NULL,
+WIS,12,NULL,
+CHA,17,NULL,
+Acrobatics,NULL,0,
+Animal Handling,NULL,0,
+Arcana,NULL,1,"	"
+Athletics,NULL,0,
+Deception,NULL,1,
+History,NULL,0,
+Insight,NULL,0,
+Intimidation,NULL,0,
+Investigation,NULL,0,
+Medicine,NULL,0,
+Nature,NULL,1,
+Perception,NULL,0,
+Performance,NULL,0,
+Persuasion,NULL,0,
+Religion,NULL,0,
+Sleight of Hand,NULL,1,
+Stealth,NULL,0,
+Survival,NULL,0,
+Str Sav,NULL,0,
+Dex Sav,NULL,0,
+Con Sav,NULL,0,
+Int Sav,NULL,0,
+Wis Sav,NULL,1,
+Cha Sav,NULL,1,
+Prof Mod,NULL,2,"	"
+Proficiencies,NULL,NULL,"Disguise Kit;
+Forgery Kit;
+Light armor;
+Simple weapons;"
+Languages,NULL,NULL,"Draconic		"
+Traits,NULL,NULL,"ELDRITCH SIGHT:Cast detect magic at will;MASK OF MANY FACES:Cast disguise self at will.;DARK ONE'S BLESSING:When you reduce a creature to 0 hit points, you gain 7 temporary hit points.;PACK TACTICS:You have advantage on an attack roll against a creature if at least one of your allies is within 5 feet of the creature and the ally isn't incapacitated.;GROVEL, COWER AND BEG (1/short rest):As an action on your turn, you can cower pathetically to distract nearby foes. Until the end of your next turn, your allies gain advantage on attack rolls against enemies within 10 feet of you that you can see.;SUNLIGHT SENSITIVITY:You have disadvantage on attack rolls and on Wisdom (Perception) checks that rely on sight when you, the target of your attack, or whatever you are trying to perceive is in direct sunlight.;DARKVISION (60 ft.)
+ 
+ 
+ 
+ 
+ "
+HitDie,NULL,NULL,4d8
+MaxHealth,27,NULL,
+StartingInventory,NULL,NULL,"disguise kit
+forgery kit
+bedroll
+rope (50 ft.)
+torch
+tinderbox
+waterskin"
+CP,0,NULL,"	"
+SP,0,NULL,
+GP,0,NULL,
+Darkvision,60,NULL,
+Speed,30,NULL,
+Spellcasting Ability,NULL,NULL,CHA
+SpellDC,13,NULL,
+SpellAttack,5,NULL,
