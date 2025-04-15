@@ -3,6 +3,13 @@
 
 #include "VideoCallWidget.h"
 
+void UVideoCallWidget::onTokenPrivilegeWillExpire(const char* token)
+{
+    //GetWorld()->GetTimerManager().ClearTimer(TimerHandler);
+    //GetWorld()->GetTimerManager().SetTimer(TimerHandler, this, &UVideoCallWidget::RequestToken, 10.0f, true, 0.f);
+    RequestToken();
+}
+
 void UVideoCallWidget::SetupSDKEngine()
 {
     if (IconImage != nullptr) {
@@ -17,6 +24,58 @@ void UVideoCallWidget::SetupSDKEngine()
     }
 }
 
+void UVideoCallWidget::RequestToken()
+{
+
+    // Create Json Data
+    /*FString ServerData;
+
+    TSharedRef<TJsonWriter<TCHAR, TPrettyJsonPrintPolicy<TCHAR>>> JsonWriter = TJsonWriterFactory<TCHAR, TPrettyJsonPrintPolicy<TCHAR>>::Create(&ServerData);
+    JsonWriter->WriteObjectStart();
+
+    JsonWriter->WriteValue(TEXT("uid"), 0);
+    JsonWriter->WriteValue(TEXT("ChannelName"), "Channel1");
+    JsonWriter->WriteValue(TEXT("role"), 0);
+
+    JsonWriter->WriteObjectEnd();
+    JsonWriter->Close();*/
+
+
+    TSharedRef<IHttpRequest, ESPMode::ThreadSafe> request = FHttpModule::Get().CreateRequest();
+
+    request->SetHeader("Content-Type", "application/json; charset=UTF-8");
+    request->SetURL(FString("http://56.228.28.75:8080/rtcToken?channelName=Channel1"));
+    request->OnProcessRequestComplete().BindLambda([this](FHttpRequestPtr request, FHttpResponsePtr response, bool success) {
+        //if (!success || !response.IsValid()) return false;
+        
+        FTokenResponse tokenResponse;
+        FString JsonString = response->GetContentAsString();
+        FJsonObjectConverter::JsonObjectStringToUStruct<FTokenResponse>(JsonString, &tokenResponse);
+       
+        CallbackForRequestToken(tokenResponse.key);
+
+        });
+    request->ProcessRequest();
+
+
+}
+
+void UVideoCallWidget::CallbackForRequestToken(FString NewToken)
+{
+
+    if (!NewToken.IsEmpty()) {
+        _token = NewToken;
+    }
+
+
+    if (ConnectionState != agora::rtc::CONNECTION_STATE_DISCONNECTED && ConnectionState != agora::rtc::CONNECTION_STATE_FAILED)
+    {
+        RtcEngineProxy->renewToken(TCHAR_TO_UTF8(*_token));
+    }
+    tokenFound = true;
+}
+
+
 void UVideoCallWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
@@ -26,6 +85,7 @@ void UVideoCallWidget::NativeConstruct()
     }
 
     SetupSDKEngine();
+    //RequestToken();
 }
 
 void UVideoCallWidget::NativeDestruct()
@@ -43,6 +103,11 @@ void UVideoCallWidget::NativeDestruct()
 
 void UVideoCallWidget::Join(int IN_UID)
 {
+    //GetWorld()->GetTimerManager().ClearTimer(TimerHandler);
+    //GetWorld()->GetTimerManager().SetTimer(TimerHandler, this, &UVideoCallWidget::RequestToken, 10.0f, true, 0.f);
+    RequestToken();
+    while (!tokenFound) {};
+
     agora::rtc::ChannelMediaOptions options;
     RtcEngineProxy->enableVideo();
 
@@ -61,7 +126,9 @@ void UVideoCallWidget::Join(int IN_UID)
     // Set user role to broadcaster
     options.clientRoleType = agora::rtc::CLIENT_ROLE_TYPE::CLIENT_ROLE_BROADCASTER;
     // Join the channel
-    RtcEngineProxy->joinChannel(TCHAR_TO_ANSI(_token), TCHAR_TO_ANSI(_channelName), IN_UID, options);
+    RtcEngineProxy->joinChannel(TCHAR_TO_UTF8(*_token), TCHAR_TO_ANSI(_channelName), IN_UID, options);
+
+    tokenFound = false;
 }
 
 void UVideoCallWidget::Leave()
@@ -155,5 +222,10 @@ void UVideoCallWidget::onUserOffline(agora::rtc::uid_t uid, agora::rtc::USER_OFF
             ((agora::rtc::ue::AgoraUERtcEngine*)RtcEngineProxy)->setupRemoteVideoEx(videoCanvas, connection);
         }
     }
+}
+
+void UVideoCallWidget::onConnectionStateChanged(agora::rtc::CONNECTION_STATE_TYPE state, agora::rtc::CONNECTION_CHANGED_REASON_TYPE reason)
+{
+    ConnectionState = state;
 }
 

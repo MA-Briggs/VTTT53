@@ -10,7 +10,7 @@ public class VTT53 : ModuleRules
    
 
 
-        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore","AgoraPlugin", "EnhancedInput" });
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore","AgoraPlugin", "EnhancedInput", "HTTP", "Json", "JsonUtilities" });
 		if (Target.Platform == UnrealTargetPlatform.Android)
 		{
 			PrivateDependencyModuleNames.AddRange(new string[] { "AndroidPermission" });

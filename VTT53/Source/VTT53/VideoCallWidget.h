@@ -7,14 +7,29 @@
 #include "Components/Image.h"
 #include "RemoteScreenWidget.h"
 #include <Components/WidgetComponent.h>
-
+#include "HttpModule.h"
+#include "Interfaces/IHttpRequest.h"
+#include "Interfaces/IHttpResponse.h"
+#include "Json.h"
+#include "JsonUtilitiesClasses.h"
+#include "JsonObjectConverter.h"
+#include <iostream>
 #include "AgoraPluginInterface.h"
+
+#include "Engine/TimerHandle.h"
 
 #include "VideoCallWidget.generated.h"
 
 /**
  * 
  */
+USTRUCT()
+struct FTokenResponse {
+	GENERATED_BODY()
+
+	UPROPERTY() FString key;
+};
+
 UCLASS()
 class VTT53_API UVideoCallWidget : public UUserWidget, public agora::rtc::IRtcEngineEventHandler
 {
@@ -29,7 +44,8 @@ public:
 	// Fill in your channel name
 	const TCHAR* _channelName = _T("Channel1");
 	// Fill in Token
-	const TCHAR* _token = _T("007eJxTYKhJXhnRkev87jCnqZwOX/DjpvS/BVNCJOufhYvy7RVcEaDAYJKaamBgamGeaGZpaJJikphklpaSamiWmmpqaJiSlmbhs/97ekMgI0NX9wFmRgYIBPE5GJwzEvPyUnMMGRgAS+of1A==");
+	FString _token;
+
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	int UID;
@@ -68,13 +84,25 @@ public:
 	void onUserOffline(agora::rtc::uid_t uid, agora::rtc::USER_OFFLINE_REASON_TYPE reason) override;
 
 
+	void onConnectionStateChanged(agora::rtc::CONNECTION_STATE_TYPE state, agora::rtc::CONNECTION_CHANGED_REASON_TYPE reason) override;
+
+	void onTokenPrivilegeWillExpire( const char* token) override;
+
+
 	// Create and initialize IRtcEngine
 	void SetupSDKEngine();
+
+	void RequestToken();
+	void CallbackForRequestToken(FString NewToken);
 
 protected:
 	
 	// Clean up all session-related resources
 	void NativeDestruct() override;
 
+	agora::rtc::CONNECTION_STATE_TYPE ConnectionState = agora::rtc::CONNECTION_STATE_TYPE::CONNECTION_STATE_DISCONNECTED;
+	
+	FTimerHandle TimerHandler;
 
+	bool tokenFound = false;
 };

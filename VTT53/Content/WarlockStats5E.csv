@@ -58,3 +58,5 @@ Speed,30,NULL,
 Spellcasting Ability,NULL,NULL,CHA
 SpellDC,13,NULL,
 SpellAttack,5,NULL,
+SpellSlots1,0,NULL,
+SpellSlots2,2,NULL,
