@@ -85,7 +85,7 @@ void UVideoCallWidget::NativeConstruct()
     }
 
     SetupSDKEngine();
-    //RequestToken();
+    RequestToken();
 }
 
 void UVideoCallWidget::NativeDestruct()
@@ -105,8 +105,8 @@ void UVideoCallWidget::Join(int IN_UID)
 {
     //GetWorld()->GetTimerManager().ClearTimer(TimerHandler);
     //GetWorld()->GetTimerManager().SetTimer(TimerHandler, this, &UVideoCallWidget::RequestToken, 10.0f, true, 0.f);
-    RequestToken();
-    while (!tokenFound) {};
+    //RequestToken();
+   // while (!tokenFound) {};
 
     agora::rtc::ChannelMediaOptions options;
     RtcEngineProxy->enableVideo();
